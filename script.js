@@ -40,12 +40,16 @@ function generateLootTable(numItems) {
     };
 
     let lootTable = [];
-    let usedItems = new Set();
+    let usedRolls = new Set();
 
-    while (lootTable.length < numItems) {
+    while (lootTable.length < numItems && usedRolls.size < 20) {
         const d20 = Math.floor(Math.random() * 20) + 1;
-        let itemType;
 
+        if (usedRolls.has(d20)) {
+            continue; // Skip if this roll value has already been used
+        }
+
+        let itemType;
         if (d20 <= 10) {
             itemType = 'common';
         } else if (d20 <= 15) {
@@ -61,15 +65,8 @@ function generateLootTable(numItems) {
         const itemList = items[itemType].list;
         const randomItem = itemList[Math.floor(Math.random() * itemList.length)];
 
-        if (!usedItems.has(randomItem)) {
-            usedItems.add(randomItem);
-            lootTable.push({ item: randomItem, rarity: itemType, roll: d20 });
-        }
-
-        // If there are not enough unique items to satisfy the request, break the loop
-        if (usedItems.size >= Object.values(items).flatMap(item => item.list).length) {
-            break;
-        }
+        usedRolls.add(d20);
+        lootTable.push({ item: randomItem, rarity: itemType, roll: d20 });
     }
 
     return lootTable;
@@ -116,4 +113,5 @@ function displayLootTable(lootTable) {
     table.appendChild(tbody);
     lootTableDiv.appendChild(table);
 }
+
 
