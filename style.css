@@ -32,7 +32,7 @@ label {
     margin-bottom: 5px;
 }
 
-input, select, button {
+input, button {
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -50,3 +50,17 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+#lootTable ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#lootTable li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
